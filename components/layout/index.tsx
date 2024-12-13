@@ -17,10 +17,10 @@ export default function Layout({ children }: any) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex">
+    <div className="min-h-screen min-w-screen w-fit md:w-full bg-gray-100 flex">
       {/* Sidebar */}
       <div
-        className={`fixed inset-y-0 left-0 bg-blue-600 text-white w-64 transform ${
+        className={`fixed z-10 inset-y-0 left-0 bg-blue-600 text-white w-64 transform ${
           menuOpen ? "translate-x-0" : "-translate-x-3/4"
         } md:translate-x-0 transition-transform duration-300 ease-in-out shadow-lg`}
       >
@@ -59,10 +59,10 @@ export default function Layout({ children }: any) {
       {/* Main Content */}
       <div className="flex-1 md:ml-64">
         {/* Header */}
-        <header className="bg-white shadow p-4 flex justify-between items-center">
+        <header className="bg-white shadow p-4 pl-24 md:pl-4 flex justify-between items-center">
           <button
             onClick={toggleMenu}
-            className={`md:hidden bg-white shadow-lg rounded-full p-2 text-blue-600 absolute ${
+            className={`md:hidden bg-white shadow-lg rounded-full p-2 text-blue-600 absolute z-20 ${
               menuOpen ? "left-60" : "left-12"
             } transition-all duration-500 ease-in-out`}
           >
@@ -95,7 +95,7 @@ export default function Layout({ children }: any) {
         </header>
 
         {/* Content */}
-        <main className="p-4">{children}</main>
+        <main className="p-4 pl-20 md:pl-8 md:pr-8">{children}</main>
       </div>
     </div>
   );

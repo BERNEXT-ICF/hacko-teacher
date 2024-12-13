@@ -76,7 +76,7 @@ export const useUpdateClass = (id: any) => {
 export const useUpdateVisibilityClass = () => {
   return useMutation({
     mutationKey: ["updateVisibilityClass"],
-    mutationFn: async (id : any) => {
+    mutationFn: async (id: any) => {
       await api.patch(`/users/class/${id}`);
     },
     onSuccess: () => {
@@ -85,6 +85,22 @@ export const useUpdateVisibilityClass = () => {
     },
     onError: () => {
       message.error("Failed to update visibility class. Please try again.");
+    },
+  });
+};
+
+export const useDeleteClass = () => {
+  return useMutation({
+    mutationKey: ["deleteClass"],
+    mutationFn: async (id: any) => {
+      await api.delete(`/users/class/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["getAllClass"]);
+      message.success("Class deleted successfully!");
+    },
+    onError: () => {
+      message.error("Failed to delete class. Please try again.");
     },
   });
 };

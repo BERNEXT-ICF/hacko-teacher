@@ -5,7 +5,11 @@ import { SlOptions } from "react-icons/sl";
 import Link from "next/link";
 import { CiShare1 } from "react-icons/ci";
 import { FaCircle } from "react-icons/fa";
-import { useGetAllClass, useUpdateVisibilityClass } from "../../../api/class/api";
+import {
+  useGetAllClass,
+  useUpdateVisibilityClass,
+  useDeleteClass,
+} from "../../../api/class/api";
 import { capitalCase } from "change-case";
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa6";
@@ -44,14 +48,14 @@ const Class = () => {
         break;
       case "3":
         // Change Visibility
-        mutate(record.id)
+        updateVisibility(record.id);
         break;
       case "4":
         // Delete
         Modal.confirm({
           title: "Are you sure?",
           content: "This action will permanently delete the class.",
-          //   onOk: () => deleteClass.mutate(record.id),
+          onOk: () => deleteClass(record.id),
         });
         break;
       default:
@@ -165,7 +169,16 @@ const Class = () => {
   ];
 
   const { data: classes } = useGetAllClass();
-  const {mutate, isLoading, isError} = useUpdateVisibilityClass()
+  const {
+    mutate: updateVisibility,
+    isLoading: isLoadingUpdateVisibility,
+    isError: isErrorUpdateVisibility,
+  } = useUpdateVisibilityClass();
+  const {
+    mutate: deleteClass,
+    isLoading: isLoadingDeleteClass,
+    isError: isErrorDeleteClass,
+  } = useDeleteClass();
 
   const processedData: DataType[] =
     classes?.map((cls: any) => ({

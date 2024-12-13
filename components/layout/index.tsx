@@ -17,7 +17,7 @@ export default function Layout({ children }: any) {
   };
 
   return (
-    <div className="min-h-screen min-w-screen w-fit md:w-full bg-gray-100 flex">
+    <div className="min-h-screen min-w-screen md:w-full bg-gray-100 flex">
       {/* Sidebar */}
       <div
         className={`fixed z-10 inset-y-0 left-0 bg-blue-600 text-white w-64 transform ${

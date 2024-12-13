@@ -72,3 +72,19 @@ export const useUpdateClass = (id: any) => {
     },
   });
 };
+
+export const useUpdateVisibilityClass = () => {
+  return useMutation({
+    mutationKey: ["updateVisibilityClass"],
+    mutationFn: async (id : any) => {
+      await api.patch(`/users/class/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["getAllClass"]);
+      message.success("Class updated visibility successfully!");
+    },
+    onError: () => {
+      message.error("Failed to update visibility class. Please try again.");
+    },
+  });
+};

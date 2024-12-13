@@ -5,11 +5,11 @@ import { SlOptions } from "react-icons/sl";
 import Link from "next/link";
 import { CiShare1 } from "react-icons/ci";
 import { FaCircle } from "react-icons/fa";
-import { useGetAllClass } from "../../../api/class/api";
+import { useGetAllClass, useUpdateVisibilityClass } from "../../../api/class/api";
 import { capitalCase } from "change-case";
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa6";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/router";
 
 interface DataType {
   id: React.Key;
@@ -37,15 +37,14 @@ const Class = () => {
       case "1":
         // View details
         push(`/dashboard/class/${record.id}`);
-        console.log("View", record);
         break;
       case "2":
         // Edit
-        console.log("Edit", record);
+        push(`/dashboard/class/${record.id}`);
         break;
       case "3":
         // Change Visibility
-        console.log("Change Visibility", record);
+        mutate(record.id)
         break;
       case "4":
         // Delete
@@ -166,6 +165,7 @@ const Class = () => {
   ];
 
   const { data: classes } = useGetAllClass();
+  const {mutate, isLoading, isError} = useUpdateVisibilityClass()
 
   const processedData: DataType[] =
     classes?.map((cls: any) => ({

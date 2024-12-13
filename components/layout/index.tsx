@@ -1,7 +1,7 @@
 // pages/dashboard.tsx
 import { useState } from "react";
 import Link from "next/link";
-import { useLogout } from "@/pages/login/api";
+import { useLogout } from "@/api/auth/login/api";
 
 export default function Layout({ children }: any) {
   const [menuOpen, setMenuOpen] = useState(false);

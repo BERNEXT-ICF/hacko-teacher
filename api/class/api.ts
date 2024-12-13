@@ -22,8 +22,18 @@ export const useGetAllClass = () => {
   });
 };
 
+export const useGetDetailsClass = (id: any) => {
+  return useQuery({
+    queryKey: ["getDetailsClass", id],
+    queryFn: async () => {
+      const { data } = await api.get(`/users/class/${id}`);
+      return data.data;
+    },
+    enabled: !!id,
+  });
+};
+
 export const useCreateClass = () => {
-//   const queryClient = useQueryClient(); // Access the query client
   const router = useRouter();
 
   return useMutation({
@@ -40,6 +50,25 @@ export const useCreateClass = () => {
     },
     onError: () => {
       message.error("Failed to create class. Please try again.");
+    },
+  });
+};
+
+export const useUpdateClass = (id: any) => {
+  const router = useRouter();
+
+  return useMutation({
+    mutationKey: ["updateClass", id],
+    mutationFn: async (data: any) => {
+      await api.put(`/users/class/${id}`, data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(["getAllClass"]);
+      router.push("/dashboard/class");
+      message.success("Class updated successfully!");
+    },
+    onError: () => {
+      message.error("Failed to update class. Please try again.");
     },
   });
 };

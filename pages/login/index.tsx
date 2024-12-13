@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
-import { useLogin } from "./api";
+import { useLogin } from "../../api/auth/login/api";
 
 type FormValues = {
   email: string;

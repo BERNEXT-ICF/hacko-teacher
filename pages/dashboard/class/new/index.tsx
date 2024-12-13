@@ -2,8 +2,8 @@ import { useState } from "react";
 import Layout from "@/components/layout";
 import { Input, Button, Select, Form, message } from "antd";
 import { useMutation, useQueryClient } from "react-query";
-import { useCreateClass } from "../api";
-import { CreateClassPayload } from "../api";
+import { useCreateClass } from "../../../../api/class/api";
+import { CreateClassPayload } from "../../../../api/class/api";
 
 const { TextArea } = Input;
 const { Option } = Select;

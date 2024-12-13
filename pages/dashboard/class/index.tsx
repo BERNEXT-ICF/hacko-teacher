@@ -1,14 +1,15 @@
 import Layout from "@/components/layout";
-import { Table, Space, Dropdown } from "antd/lib";
+import { Table, Space, Dropdown, Modal } from "antd/lib";
 import type { TableColumnsType, TableProps } from "antd/lib";
 import { SlOptions } from "react-icons/sl";
 import Link from "next/link";
 import { CiShare1 } from "react-icons/ci";
 import { FaCircle } from "react-icons/fa";
-import { useGetAllClass } from "./api";
+import { useGetAllClass } from "../../../api/class/api";
 import { capitalCase } from "change-case";
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa6";
+import { Router, useRouter } from "next/router";
 
 interface DataType {
   id: React.Key;
@@ -22,12 +23,42 @@ interface DataType {
 }
 
 const Class = () => {
+  const { push } = useRouter();
+
   const items = [
     { key: "1", label: "View" },
     { key: "2", label: "Edit" },
     { key: "3", label: "Change Visibility" },
     { key: "4", label: "Delete" },
   ];
+
+  const handleActionClick = (key: string, record: DataType) => {
+    switch (key) {
+      case "1":
+        // View details
+        push(`/dashboard/class/${record.id}`);
+        console.log("View", record);
+        break;
+      case "2":
+        // Edit
+        console.log("Edit", record);
+        break;
+      case "3":
+        // Change Visibility
+        console.log("Change Visibility", record);
+        break;
+      case "4":
+        // Delete
+        Modal.confirm({
+          title: "Are you sure?",
+          content: "This action will permanently delete the class.",
+          //   onOk: () => deleteClass.mutate(record.id),
+        });
+        break;
+      default:
+        console.log("Unknown action");
+    }
+  };
 
   const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([]);
 
@@ -110,12 +141,24 @@ const Class = () => {
     {
       title: "Actions",
       dataIndex: "actions",
-      render: () => (
+      render: (text, record) => (
         <Space size="middle">
-          <Dropdown menu={{ items }}>
-            <a>
-              <SlOptions className="text-blue-400" />
-            </a>
+          <Dropdown
+            menu={{
+              items: items.map((item) => ({
+                key: item.key,
+                label: (
+                  <div
+                    onClick={() => handleActionClick(item.key, record)}
+                    className="cursor-pointer"
+                  >
+                    {item.label}
+                  </div>
+                ),
+              })),
+            }}
+          >
+            <SlOptions className="text-blue-400 cursor-pointer" />
           </Dropdown>
         </Space>
       ),
